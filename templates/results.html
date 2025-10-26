@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post">
+    <input type="text" name="query" value="{{ query }}" size="40">
+    <select name="sheet">
+        <option value="All" {% if selected=="All" %}selected{% endif %}>All Sheets</option>
+        {% for s in sheets %}
+            <option value="{{ s }}" {% if selected==s %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Search</button>
+</form>
+
+{% if results %}
+    <form method="post" action="/export" style="display:inline;">
+        <input type="hidden" name="query" value="{{ query }}">
+        <input type="hidden" name="sheet" value="{{ selected }}">
+        <button type="submit">⬇ Export to Excel</button>
+    </form>
+
+    {% for sheet, df in results.items() %}
+        <h2>{{ sheet }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    {% for col in df.columns %}
+                        <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in df.itertuples(index=False) %}
+                    <tr>
+                        {% for value in row %}
+                            <td>{{ value|safe }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+{% else %}
+    <p>No matches found.</p>
+{% endif %}
+{% endblock %}

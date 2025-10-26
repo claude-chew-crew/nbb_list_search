@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <title>NBB Search</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        table { border-collapse: collapse; margin-bottom: 2em; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 6px; }
+        th { background: #f0f0f0; }
+        header { margin-bottom: 1em; }
+        header form { display: inline; margin-right: 0.5em; }
+        mark { background-color: #ffeb3b; padding: 0 2px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NBB Search Prototype</h1>
+        <form method="get" action="/">
+            <button type="submit">🏠 Back to Home</button>
+        </form>
+        <form method="get" action="/clear">
+            <button type="submit">✖ Clear Search</button>
+        </form>
+    </header>
+    {% block content %}{% endblock %}
+</body>
+</html>
